@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(cuid())
+  clerkId       String        @unique
+  email         String        @unique
+  name          String?
+  avatar        String?
+  skillLevel    SkillLevel    @default(BEGINNER)
+  
+  // Relations
+  explanations  Explanation[]
+  
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  lastActive    DateTime      @default(now())
+  
+  @@index([clerkId])
+  @@index([email])
+  @@index([skillLevel])
+}
+
+model Explanation {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Content
+  title         String?
+  code          String
+  language      String
+  explanation   String
+  depth         DepthLevel    @default(INTERMEDIATE)
+  
+  // AI Metadata
+  debugTips     String[]
+  quizQuestions String[]
+  
+  // Tags & Status
+  tags          String[]
+  isPublic      Boolean       @default(false)
+  tokensUsed    Int           @default(0)
+  
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  @@index([userId])
+  @@index([language])
+  @@index([createdAt])
+  @@index([tags])
+}
+
+// Enums
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum DepthLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}

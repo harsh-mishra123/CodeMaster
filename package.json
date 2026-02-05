@@ -1,0 +1,48 @@
+{
+  "name": "codemaster",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^6.37.3",
+    "@clerk/themes": "^2.4.51",
+    "@eslint/eslintrc": "^3.3.3",
+    "@google/generative-ai": "^0.24.1",
+    "@prisma/client": "^5.22.0",
+    "@radix-ui/react-slot": "^1.2.4",
+    "axios": "^1.13.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "lucide-react": "^0.469.0",
+    "next": "^15.5.12",
+    "openai": "^4.104.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-hook-form": "^7.71.1",
+    "react-hot-toast": "^2.6.0",
+    "recharts": "^3.7.0",
+    "resend": "^3.5.0",
+    "socket.io-client": "^4.8.3",
+    "svix": "^1.84.1",
+    "tailwind-merge": "^2.6.1",
+    "twilio": "^4.23.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20.19.31",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "prisma": "^7.3.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
