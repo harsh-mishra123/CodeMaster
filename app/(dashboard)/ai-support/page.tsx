@@ -89,7 +89,7 @@ export default function AISupportPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">AI Code Support</h1>
           <p className="text-gray-400">
-            Get instant AI explanations for your code. Paste any code snippet and let DevOracle explain it to you.
+            Get instant AI explanations for your code. Paste any code snippet and let DevOracle explain it to you in easiest way possible.
           </p>
           {user && (
             <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
