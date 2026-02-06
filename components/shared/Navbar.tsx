@@ -1,9 +1,10 @@
-import Link from 'next/link';
-import { UserButton } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server';
+'use client';
 
-export default async function Navbar() {
-  const { userId } = await auth();
+import Link from 'next/link';
+import { UserButton, useAuth } from '@clerk/nextjs';
+
+export default function Navbar() {
+  const { userId } = useAuth();
 
   return (
     <nav className="border-b border-gray-800 bg-gray-900/50 backdrop-blur-xl fixed w-full z-50">
@@ -11,7 +12,7 @@ export default async function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-linear-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 DevOracle
               </span>
             </Link>
@@ -38,7 +39,7 @@ export default async function Navbar() {
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-md hover:opacity-90 transition-opacity"
+                  className="px-4 py-2 text-sm font-medium bg-linear-to-r from-purple-600 to-cyan-600 text-white rounded-md hover:opacity-90 transition-opacity"
                 >
                   Get Started
                 </Link>

@@ -26,7 +26,7 @@ export default function RootLayout({
           colorBackground: '#0f172a',
         },
         elements: {
-          formButtonPrimary: 'bg-gradient-to-r from-purple-600 to-cyan-500 hover:opacity-90',
+          formButtonPrimary: 'bg-linear-to-r from-purple-600 to-cyan-500 hover:opacity-90',
           footerActionLink: 'text-cyan-400 hover:text-cyan-300',
         },
       }}
