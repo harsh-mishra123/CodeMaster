@@ -211,7 +211,7 @@ export default function Home() {
               className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
             >
               Get instant code explanations, debugging help, and personalized learning paths. 
-              Elevate your programming skills with your 24/7 AI code mentor.
+              Elevate your programming skills with your 24/7 AI code mentor, we will make you fall in love.
             </motion.p>
             
             {/* Interactive CTA Buttons */}
