@@ -65,8 +65,8 @@ export default function LoginPage() {
                 identityPreviewEditButton: 'text-cyan-400',
               },
             }}
-            redirectUrl="/dashboard/ai-support"
-            signUpUrl="/auth/register"
+            forceRedirectUrl="/ai-support"
+            signUpUrl="/register"
           />
         </div>
 

@@ -60,8 +60,8 @@ export default function RegisterPage() {
                   'bg-gray-800/50 border-gray-700 text-white focus:border-purple-500',
               },
             }}
-            redirectUrl="/dashboard/ai-support"
-            signInUrl="/auth/login"
+            forceRedirectUrl="/ai-support"
+            signInUrl="/login"
           />
         </div>
 
@@ -70,7 +70,7 @@ export default function RegisterPage() {
           <p className="text-gray-400">
             Already have an account?{' '}
             <Link
-              href="/auth/login"
+              href="/login"
               className="text-cyan-400 hover:text-cyan-300 font-medium"
             >
               Sign In
