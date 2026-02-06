@@ -1,49 +1,14 @@
-import { PrismaClient } from '@prisma/client';
-
-const prismaClientSingleton = () => {
-    try {
-        const url = process.env.DATABASE_URL;
-        
-        // Use provided URL if available
-        if (url) {
-            return new PrismaClient({
-                datasources: {
-                    db: {
-                        url,
-                    },
-                },
-            });
-        }
-        
-        // Fallback to default env loading
-        return new PrismaClient();
-    } catch (error) {
-        console.error("Failed to initialize Prisma Client:", error);
-        
-        // Return a dummy object that doesn't crash on property access
-        const dummyProxy = new Proxy({}, {
-            get: (target, prop) => {
-                if (prop === 'then') return undefined; // Promise safety
-                // Warn on any method call
-                return (...args: any[]) => {
-                    console.warn(`Database operation '${String(prop)}' skipped (DB Connection Failed)`);
-                    return Promise.resolve(null);
-                };
-            }
-        });
-        return dummyProxy as unknown as PrismaClient;
-    }
-};
-
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+import { PrismaClient } from '@prisma/client'
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined;
-};
+  prisma: PrismaClient | undefined
+}
 
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+})
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
 // Safe test connection function
 export async function testConnection() {

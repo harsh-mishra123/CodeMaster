@@ -119,6 +119,75 @@ export async function explainCode(
   }
 }
 
+export async function debugCode(
+  code: string,
+  error: string,
+  language: Language
+): Promise<{ analysis: string; fixedCode: string }> {
+  if (!genAI) {
+    return {
+      analysis: 'Gemini API not configured. Please add GEMINI_API_KEY to your environment variables.',
+      fixedCode: code,
+    };
+  }
+
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    
+    const prompt = `
+      You are DevOracle, an expert AI coding mentor.
+      
+      TASK: Debug this ${language} code.
+      
+      CODE:
+      ${code}
+      
+      ERROR MESSAGE (if any):
+      ${error || 'No specific error message provided. Look for logical or syntax errors.'}
+      
+      REQUIREMENTS:
+      1. Analyze the code and identify the bug(s).
+      2. Provide a fixed version of the code.
+      3. Explain what was wrong and how it was fixed.
+      
+      RESPONSE FORMAT (JSON ONLY):
+      {
+        "analysis": "Explanation of the bug and the fix...",
+        "fixedCode": "The corrected code..."
+      }
+    `;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    
+    const cleanedText = text
+      .replace(/```json\s*/g, '')
+      .replace(/```\s*/g, '')
+      .trim();
+    
+    try {
+      const parsed = JSON.parse(cleanedText);
+      return {
+        analysis: parsed.analysis || 'Analysis not available.',
+        fixedCode: parsed.fixedCode || code,
+      };
+    } catch (parseError) {
+        console.error('Failed to parse debug response:', parseError);
+        return {
+            analysis: 'Failed to parse AI response. Please try again.',
+            fixedCode: code
+        }
+    }
+  } catch (error: any) {
+    console.error('Debug API Error:', error);
+    return {
+        analysis: 'An error occurred while debugging the code.',
+        fixedCode: code
+    }
+  }
+}
+
 export async function generateCode(
   description: string,
   language: Language

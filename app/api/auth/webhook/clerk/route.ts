@@ -96,8 +96,12 @@ export async function POST(req: Request) {
       });
 
       console.log(`✅ User deleted from database: ${id}`);
-    } catch (error) {
-      console.error('Error deleting user from database:', error);
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        console.warn(`User ${id} not found in database (already deleted or never synced)`);
+      } else {
+        console.error('Error deleting user from database:', error);
+      }
     }
   }
 

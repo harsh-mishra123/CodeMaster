@@ -39,11 +39,14 @@ export async function POST(request: NextRequest) {
     const explanation = await explainCode(code, safeLang, safeDepth);
 
     // 4. Save to Database (Optional - Fire & Forget)
-    if (userId && user && prisma) {
+    if (userId && user) {
         // We do NOT await this, so the user gets the response instantly.
         // We use a self-executing async function to handle the promise.
         (async () => {
             try {
+                // Ensure prisma is available
+                if (!prisma) return;
+
                 // Upsert user to ensure they exist
                 const email = user.emailAddresses[0]?.emailAddress;
                 // Double check prisma connection to avoid crash in background
